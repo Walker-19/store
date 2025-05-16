@@ -46,10 +46,10 @@ class CategoryScreen extends StatelessWidget {
                       trailing: Icon(Icons.arrow_forward_ios, size: 10),
                       onTap: () async {
                          Favoris favoris = Favoris();
-                         
+
                          await favoris.add(data[index]);
 
-                         inspect(favoris.load());
+                        //  inspect(favoris.load());
                       },
                     );
                   },
