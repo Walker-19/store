@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:store/models/product.dart';
 import 'package:store/services/product_api_service.dart';
 import 'package:store/widgets/shared/payment_button_widget.dart';
+
 import 'package:store/models/cart.dart'; // Import du panier
+
 
 class ProductScreen extends StatefulWidget {
   final int productId;
@@ -39,6 +41,9 @@ class _ProductScreenState extends State<ProductScreen> {
           final product = snapshot.data!;
           final images = product.images ?? [];
 
+
+          // Initialiser l'image sélectionnée si null
+
           selectedImageUrl ??= images.isNotEmpty ? images[0] : null;
 
           return SingleChildScrollView(
@@ -46,6 +51,9 @@ class _ProductScreenState extends State<ProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
+                // Image principale
+
                 if (selectedImageUrl != null)
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -67,6 +75,9 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                 const SizedBox(height: 12),
+
+
+                // Thumbnails horizontaux
 
                 if (images.length > 1)
                   SizedBox(
@@ -119,6 +130,9 @@ class _ProductScreenState extends State<ProductScreen> {
 
                 const SizedBox(height: 20),
 
+
+                // Titre
+
                 Text(
                   product.title ?? '',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -126,6 +140,9 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                 ),
                 const SizedBox(height: 10),
+
+
+                // Prix
 
                 Text(
                   '${product.price} €',
@@ -137,6 +154,9 @@ class _ProductScreenState extends State<ProductScreen> {
                 ),
                 const SizedBox(height: 20),
 
+
+                // Description
+
                 const Text(
                   'Description',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
@@ -147,7 +167,11 @@ class _ProductScreenState extends State<ProductScreen> {
                   style: const TextStyle(fontSize: 16, height: 1.4),
                 ),
 
+
                 const SizedBox(height: 100),
+
+                const SizedBox(height: 100), // espace pour le bouton bottomNavigationBar
+
               ],
             ),
           );
@@ -155,6 +179,7 @@ class _ProductScreenState extends State<ProductScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
+
         child: FutureBuilder<Product>(
           future: ProductApiService().getProductById(widget.productId),
           builder: (context, snapshot) {
@@ -186,6 +211,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 }
               },
             );
+  
           },
         ),
       ),

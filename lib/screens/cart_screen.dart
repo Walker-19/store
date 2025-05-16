@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:store/models/product.dart';
 import 'package:store/models/cart.dart';
 
+
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
@@ -10,6 +11,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+
   List<Product> cartItems = [];
   final Cart cart = Cart();
 
@@ -78,3 +80,10 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+

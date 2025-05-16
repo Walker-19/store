@@ -6,16 +6,48 @@ import 'package:store/models/category.dart';
 import 'package:store/models/favoris.dart';
 import 'package:store/models/product.dart';
 import 'package:store/providers/category_provider.dart';
+import 'package:store/screens/product_screen.dart';
 import 'package:store/services/category_api_service.dart';
 import 'package:store/screens/product_screen.dart';
+import 'package:store/widgets/Product/card_product_widget.dart';
 
-class CategoryScreen extends StatelessWidget {
+
+class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
+
+  @override
+  State<CategoryScreen> createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
+  late Future<List<Product>> _favorisList;
+
+ @override
+  void initState() {
+    super.initState();
+    _loadFavoris();
+  }
+
+void _loadFavoris() {
+    _favorisList = Favoris().load();
+  }
+
+    Future<void> _refresh() async {
+    setState(() {
+      _loadFavoris();
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     // récupérer la catégorie stockée dans le provider
     Category category = context.watch<CategoryProvider>().category!;
     // inspect(context.watch<CategoryProvider>().category);
+
+
+
 
     return Container(
       //   color: Colors.amber,
@@ -40,20 +72,19 @@ class CategoryScreen extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: data.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Image.network(data[index].images![0]),
-                      title: Text(data[index].title!),
-                      subtitle: Text('${data[index].price!}€'),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 10),
-                      onTap: () {
-                        Navigator.of(context).push(
-  MaterialPageRoute(
-    builder: (_) => ProductScreen(productId: data[index].id!),
-  ),
-);
 
-                      },
-                    );
+
+                 
+                    
+                    return CardProductWidget(product: data[index], function: (){
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => ProductScreen(productId: data[index].id!))
+                      );
+
+
+                    },);
+
                   },
                 );
               }
@@ -66,3 +97,5 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 }
+
+
