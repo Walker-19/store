@@ -27,9 +27,12 @@ class MyStore extends StatelessWidget {
       title: "My Store",
       theme: AppTheme().getTheme(),
       // utiliser le routeur
+      
       routerConfig: RouterService().getRouter(),
 
       // home: RootLayout(screen: HomeScreen()),
     );
+    
   }
+  
 }
