@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 
 class PaymentButtonWidget extends StatelessWidget {
-  final String text;
+  final Widget child;
   final VoidCallback onPressed;
   final Color backgroundColor;
-  final Color textColor;
+
   final double borderRadius;
+  final double width;
+  final double height;
 
   const PaymentButtonWidget({
     super.key,
-    required this.text,
+    required this.child,
     required this.onPressed,
     this.backgroundColor = Colors.blueAccent,
-    this.textColor = Colors.white,
     this.borderRadius = 12.0,
+    this.width = double.infinity,
+    this.height = 50
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      height: 50,
+      width: width,
+      height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
@@ -29,10 +32,7 @@ class PaymentButtonWidget extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 18, color: textColor),
-        ),
+        child: Center(child: child)
       ),
     );
   }

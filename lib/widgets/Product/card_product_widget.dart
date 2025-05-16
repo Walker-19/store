@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:store/models/cart.dart';
 import 'package:store/models/favoris.dart';
 import 'package:store/models/product.dart';
+import 'package:store/widgets/shared/payment_button_widget.dart';
 
 class CardProductWidget extends StatefulWidget {
   final Product product;
@@ -59,7 +61,31 @@ class _CardProductWidgetState extends State<CardProductWidget> {
     return ListTile(
       leading: Image.network(widget.product.images![0]),
       title: Text(widget.product.title!),
-      subtitle: Text('${widget.product.price}€'),
+      subtitle: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 4,
+        children: [
+          Text('${widget.product.price}€'),
+          PaymentButtonWidget(
+            width: 70,
+            height: 40,
+            backgroundColor: Colors.white,
+            child: Icon(Icons.add_shopping_cart_sharp, size: 20,), onPressed: () async{
+            final cart = Cart();
+                final currentCart = await cart.load() ?? [];
+
+                  await cart.add(widget.product);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Produit ajouté au panier"),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+          })
+
+        ],
+      ),
       onTap: widget.function,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,

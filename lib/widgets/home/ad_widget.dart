@@ -9,9 +9,9 @@ class AdWidget extends StatefulWidget {
   // liste des pubs
   final List adsList = [
     // Map : accéder aux propriétés par des crochets
-    {"img": "ad.webp", "text": "Text01"},
-    {"img": "ad2.webp", "text": "Text02"},
-    {"img": "ad3.webp", "text": "Text03"},
+    {"img": "ad.webp", "text": "Offres Irrésistible"},
+    {"img": "ad2.webp", "text": "Best-Sellers"},
+    {"img": "ad3.webp", "text": "Offre spécial pour la famille"},
   ];
 
   @override
@@ -67,9 +67,11 @@ class _AdWidgetState extends State<AdWidget> {
                 // shrinkWrap : la hauteur du widget est dépendant du contenu du widget
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
+                
                 children: [
                   ...widget.adsList.map((ad) {
                     return Column(
+                      spacing: 2,
                       children: [
                         // image stockée dans l'application
                         Image.asset(

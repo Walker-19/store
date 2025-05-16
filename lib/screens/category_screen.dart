@@ -53,47 +53,54 @@ void _loadFavoris() {
       //   color: Colors.amber,
       padding: EdgeInsets.all(15),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            category.name!,
-            style: Theme.of(context).textTheme.headlineMedium,
-            textAlign: TextAlign.center,
-          ),
-          // affichage des produits
-          FutureBuilder(
-            future: CategoryApiService().getProductsByCategoryId(category.id!),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<Product> data = snapshot.requireData;
-                // inspect(data);
-
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-
-
-                 
-                    
-                    return CardProductWidget(product: data[index], function: (){
-
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => ProductScreen(productId: data[index].id!))
-                      );
-
-
-                    },);
-
-                  },
-                );
-              }
-
-              return CircularProgressIndicator();
-            },
-          ),
-        ],
-      ),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 20,
+          children: [
+            Text(
+              category.name!,
+              style: Theme.of(context).textTheme.headlineMedium,
+              textAlign: TextAlign.center,
+            ),
+            // affichage des produits
+            FutureBuilder(
+              future: CategoryApiService().getProductsByCategoryId(category.id!),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Product> data = snapshot.requireData;
+                  // inspect(data);
+        
+                  return SingleChildScrollView(
+                    padding: EdgeInsets.all(16),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      separatorBuilder: (_, __) => const Divider(),
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                            
+                            
+                     
+                        
+                        return CardProductWidget(product: data[index], function: (){
+                            
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => ProductScreen(productId: data[index].id!))
+                          );
+                            
+                            
+                        },);
+                            
+                      },
+                    ),
+                  );
+                }
+        
+                return CircularProgressIndicator();
+              },
+            ),
+          ],
+        ),
+   
     );
   }
 }

@@ -188,19 +188,11 @@ class _ProductScreenState extends State<ProductScreen> {
             final product = snapshot.data!;
 
             return PaymentButtonWidget(
-              text: "Ajouter au panier",
+              child: Text("Ajouter au panier", style: TextStyle(fontSize: 14, color: Colors.white),),
               onPressed: () async {
                 final cart = Cart();
                 final currentCart = await cart.load() ?? [];
 
-                if (cart.containsInList(currentCart, product)) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Produit déjà dans le panier"),
-                      backgroundColor: Colors.orange,
-                    ),
-                  );
-                } else {
                   await cart.add(product);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -208,7 +200,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       backgroundColor: Colors.green,
                     ),
                   );
-                }
+                
               },
             );
   

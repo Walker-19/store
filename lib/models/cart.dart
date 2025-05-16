@@ -6,6 +6,7 @@ import 'package:store/models/product.dart';
 import 'package:store/services/storage_service.dart';
 
 class Cart extends StorageService<List<Product>> {
+  int? nbr;
   Cart() : super(key: 'cart_list');
 
   @override
@@ -41,4 +42,25 @@ class Cart extends StorageService<List<Product>> {
     await save(list);
     return true;
   }
+
+  // Supprime un seul produit quant il est ajouté plusieurs fois dans le panier
+  Future<bool> removeOneProduct(Product product) async {
+  final list = await load();
+  if (list == null || list.isEmpty) return false;
+
+  // Compter le nombre de fois que le produit est présent
+  final productCount = list.where((p) => p.id == product.id).length;
+
+  // Supprimer une seule occurrence uniquement s'il y en a plus d'une
+  if (productCount > 1) {
+    final index = list.indexWhere((p) => p.id == product.id);
+    if (index != -1) {
+      list.removeAt(index);
+      await save(list);
+      return true;
+    }
+  }
+
+  return false;
+}
 }
