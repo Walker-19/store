@@ -24,7 +24,7 @@ class Product {
     'slug': slug,
     'description': description,
     'category': category.toJson(),
-    'image': images,
+    'images': images,
     'price': price,
   };
 
