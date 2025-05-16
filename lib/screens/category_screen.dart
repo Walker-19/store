@@ -49,7 +49,7 @@ class CategoryScreen extends StatelessWidget {
 
                          await favoris.add(data[index]);
 
-                        //  inspect(favoris.load());
+                         inspect(favoris.load());
                       },
                     );
                   },
