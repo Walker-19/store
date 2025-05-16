@@ -6,6 +6,7 @@ import 'package:store/models/category.dart';
 import 'package:store/models/product.dart';
 import 'package:store/providers/category_provider.dart';
 import 'package:store/services/category_api_service.dart';
+import 'package:store/screens/product_screen.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
@@ -45,7 +46,12 @@ class CategoryScreen extends StatelessWidget {
                       subtitle: Text('${data[index].price!}€'),
                       trailing: Icon(Icons.arrow_forward_ios, size: 10),
                       onTap: () {
-                        print(data[index].title);
+                        Navigator.of(context).push(
+  MaterialPageRoute(
+    builder: (_) => ProductScreen(productId: data[index].id!),
+  ),
+);
+
                       },
                     );
                   },
