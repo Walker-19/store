@@ -38,6 +38,7 @@ class RouterService {
           ),
         ),
       
+
         GoRoute(
           path: '/favorite',
           name: 'favorite',
@@ -50,6 +51,7 @@ class RouterService {
             name: 'cart',
             builder: (context, state) => RootLayout(screen: CartScreen()),
               )
+
       ],
     );
   }

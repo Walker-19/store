@@ -32,12 +32,14 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
+
         IconButton(onPressed: () {
           
           context.pushNamed('favorite');
 
         }, icon: Icon(Icons.favorite)),
         // IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+
 
         IconButton(
           onPressed: () => context.replaceNamed('login'),

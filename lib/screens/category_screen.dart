@@ -8,7 +8,9 @@ import 'package:store/models/product.dart';
 import 'package:store/providers/category_provider.dart';
 import 'package:store/screens/product_screen.dart';
 import 'package:store/services/category_api_service.dart';
+import 'package:store/screens/product_screen.dart';
 import 'package:store/widgets/Product/card_product_widget.dart';
+
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -71,6 +73,7 @@ void _loadFavoris() {
                   itemCount: data.length,
                   itemBuilder: (context, index) {
 
+
                  
                     
                     return CardProductWidget(product: data[index], function: (){
@@ -81,6 +84,7 @@ void _loadFavoris() {
 
 
                     },);
+
                   },
                 );
               }

@@ -3,6 +3,9 @@ import 'package:store/models/product.dart';
 import 'package:store/services/product_api_service.dart';
 import 'package:store/widgets/shared/payment_button_widget.dart';
 
+import 'package:store/models/cart.dart'; // Import du panier
+
+
 class ProductScreen extends StatefulWidget {
   final int productId;
 
@@ -38,7 +41,9 @@ class _ProductScreenState extends State<ProductScreen> {
           final product = snapshot.data!;
           final images = product.images ?? [];
 
+
           // Initialiser l'image sélectionnée si null
+
           selectedImageUrl ??= images.isNotEmpty ? images[0] : null;
 
           return SingleChildScrollView(
@@ -46,7 +51,9 @@ class _ProductScreenState extends State<ProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 // Image principale
+
                 if (selectedImageUrl != null)
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -69,7 +76,9 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                 const SizedBox(height: 12),
 
+
                 // Thumbnails horizontaux
+
                 if (images.length > 1)
                   SizedBox(
                     height: 80,
@@ -121,7 +130,9 @@ class _ProductScreenState extends State<ProductScreen> {
 
                 const SizedBox(height: 20),
 
+
                 // Titre
+
                 Text(
                   product.title ?? '',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -130,7 +141,9 @@ class _ProductScreenState extends State<ProductScreen> {
                 ),
                 const SizedBox(height: 10),
 
+
                 // Prix
+
                 Text(
                   '${product.price} €',
                   style: const TextStyle(
@@ -141,7 +154,9 @@ class _ProductScreenState extends State<ProductScreen> {
                 ),
                 const SizedBox(height: 20),
 
+
                 // Description
+
                 const Text(
                   'Description',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
@@ -152,7 +167,11 @@ class _ProductScreenState extends State<ProductScreen> {
                   style: const TextStyle(fontSize: 16, height: 1.4),
                 ),
 
+
+                const SizedBox(height: 100),
+
                 const SizedBox(height: 100), // espace pour le bouton bottomNavigationBar
+
               ],
             ),
           );
@@ -160,10 +179,39 @@ class _ProductScreenState extends State<ProductScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
-        child: PaymentButtonWidget(
-          text: "Ajouter au panier",
-          onPressed: () {
-            // TODO: ajouter la logique pour ajouter au panier
+
+        child: FutureBuilder<Product>(
+          future: ProductApiService().getProductById(widget.productId),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return const SizedBox.shrink();
+
+            final product = snapshot.data!;
+
+            return PaymentButtonWidget(
+              text: "Ajouter au panier",
+              onPressed: () async {
+                final cart = Cart();
+                final currentCart = await cart.load() ?? [];
+
+                if (cart.containsInList(currentCart, product)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Produit déjà dans le panier"),
+                      backgroundColor: Colors.orange,
+                    ),
+                  );
+                } else {
+                  await cart.add(product);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Produit ajouté au panier"),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                }
+              },
+            );
+  
           },
         ),
       ),
