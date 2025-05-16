@@ -6,7 +6,8 @@ import 'package:store/models/product.dart';
 
 class CardProductWidget extends StatefulWidget {
   final Product product;
-   const CardProductWidget({super.key, required this.product});
+  final GestureTapCallback function;
+   const CardProductWidget({super.key, required this.product, required this.function});
 
   @override
   State<CardProductWidget> createState() => _CardProductWidgetState();
@@ -59,6 +60,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
       leading: Image.network(widget.product.images![0]),
       title: Text(widget.product.title!),
       subtitle: Text('${widget.product.price}€'),
+      onTap: widget.function,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         spacing: 10,
@@ -69,7 +71,6 @@ class _CardProductWidgetState extends State<CardProductWidget> {
             
           ), 
           Icon(Icons.arrow_forward_ios, size: 15),
-
         ],
       ),
     );

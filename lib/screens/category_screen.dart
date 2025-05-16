@@ -6,11 +6,9 @@ import 'package:store/models/category.dart';
 import 'package:store/models/favoris.dart';
 import 'package:store/models/product.dart';
 import 'package:store/providers/category_provider.dart';
-import 'package:store/services/category_api_service.dart';
-
 import 'package:store/screens/product_screen.dart';
-
-import 'package:store/widgets/Product/card_product_widget.dart'
+import 'package:store/services/category_api_service.dart';
+import 'package:store/widgets/Product/card_product_widget.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -75,7 +73,14 @@ void _loadFavoris() {
 
                  
                     
-                    return CardProductWidget(product: data[index]);
+                    return CardProductWidget(product: data[index], function: (){
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => ProductScreen(productId: data[index].id!))
+                      );
+
+
+                    },);
                   },
                 );
               }
