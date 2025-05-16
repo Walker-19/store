@@ -7,7 +7,7 @@ import 'package:store/theme/app_theme.dart';
 
 void main() => runApp(
   // ajout des providers
-  MultiProvider(
+  MultiProvider(// test
     providers: [
       ChangeNotifierProvider(create: (context) => CategoryProvider()),
     ],
