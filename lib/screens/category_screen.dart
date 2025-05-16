@@ -8,7 +8,7 @@ import 'package:store/providers/category_provider.dart';
 import 'package:store/services/category_api_service.dart';
 
 class CategoryScreen extends StatelessWidget {
-  // const CategoryScreen({super.key});
+  const CategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
