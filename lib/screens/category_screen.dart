@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:store/models/category.dart';
+import 'package:store/models/favoris.dart';
 import 'package:store/models/product.dart';
 import 'package:store/providers/category_provider.dart';
 import 'package:store/services/category_api_service.dart';
@@ -10,7 +11,6 @@ import 'package:store/screens/product_screen.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     // récupérer la catégorie stockée dans le provider
