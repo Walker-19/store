@@ -11,10 +11,10 @@ class Favoris extends StorageService<List<Product>>{
 
 
   @override
-  Future<List<Product>?> load() async {
+  Future<List<Product>> load() async {
     final  prefs = await SharedPreferences.getInstance();
     final jsonData = prefs.getString(key);
-    if(jsonData == null) return null;
+    if(jsonData == null) return [];
     final List<dynamic> decoded = jsonDecode(jsonData);
     return decoded.map((item) => Product.fromJson(item)).toList();
   }
@@ -30,7 +30,7 @@ class Favoris extends StorageService<List<Product>>{
   Future<void> add(Product product) async {
     final list = await load();
 
-    list!.add(product);   
+    list.add(product);   
     await save(list); 
   }
 
